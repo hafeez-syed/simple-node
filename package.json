@@ -1,0 +1,19 @@
+{
+  "name": "simple-node",
+  "version": "0.0.1",
+  "description": "hello jenkins test app",
+  "main": "index.js",
+  "scripts": {
+    "test": "./script/test"
+  },
+  "keywords": [],
+  "author": "Hafeez Syed",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "supertest": "^3.3.0"
+  }
+}
