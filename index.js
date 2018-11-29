@@ -1,6 +1,10 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
+var net = require('net');
+var server = net.createServer();
+var port = 3000;
+
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 var router = express.Router();
@@ -21,21 +25,22 @@ router.post('/add', function (req, res) {
     });
 });
 
-router.get('/exit', function (req, res) {
-    res.end();
-    console.log('Killing process ', process.pid);
-    process.kill(process.pid);
-});
-
-
 app.use('/', router);
 
-app.listen(3000, function () {
-    console.log("I am listening at PORT 3000", process.pid);
+
+server.once('error', function (err) {
+    if (err.code === 'EADDRINUSE') {
+        // port is currently in use
+        console.log("Server at PORT " + port + " is not Available");
+    }
 });
 
-process.on('SIGINT', function () {
-    console.log("\nGracefully shutting down from SIGINT (Ctrl-C)", process.pid);
-    // some other closing procedures go here
-    process.exit();
+server.once('listening', function () {
+    // close the server if listening doesn't fail
+    server.close();
+    app.listen(port, function () {
+        console.log("Server is running at PORT " + port);
+    });
 });
+
+server.listen(port);

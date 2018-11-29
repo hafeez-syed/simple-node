@@ -4,6 +4,7 @@
   "description": "hello jenkins test app",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js | npm test",
     "test": "./script/test"
   },
   "keywords": [],
